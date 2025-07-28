@@ -1,0 +1,157 @@
+<head>
+  <!-- Icônes -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!-- Informations générales -->
+  <title>Restaurant Pizzeria La Salentina - Montussan</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bienvenue à La Salentina, restaurant et pizzeria à Montussan. Pizzas au feu de bois, cuisine italienne maison, plats à emporter, et réservation en ligne.">
+  <meta name="keywords" content="restaurant Montussan, pizzeria Montussan, La Salentina, cuisine italienne, restaurant italien, réservation pizzeria, carte, menu, plats italiens, pizza artisanale">
+  <meta name="author" content="La Salentina">
+  <meta name="google-site-verification" content="_OB_GzSCOKDyAyvZ2Z6RRnzum7zwYJ7w8NG6j20cOqc" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.lasalentina.fr/">
+
+  <!-- Réseaux sociaux (Open Graph) -->
+  <meta property="og:title" content="Restaurant Pizzeria La Salentina - Montussan">
+  <meta property="og:description" content="Pizzeria artisanale à Montussan. Réservation en ligne, carte complète, plats à emporter.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.lasalentina.fr/">
+  <meta property="og:image" content="https://www.lasalentina.fr/static/logo.png">
+
+  <!-- Polices & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo-container">
+    <img src="logo.png" alt="Logo La Salentina" class="logo" loading="lazy">
+  </div>
+  <nav class="nav">
+    <ul>
+      <li><a href="menu.html">Carte</a></li>
+      <li><a href="pizza_a_emporter.html">A emporter</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="burger" id="burger">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content" data-animate="fade-up">
+    <h1>Bienvenue à La Salentina</h1>
+    <p>Pizzas au feu de bois, cuisine italienne, plats à emporter & réservation en ligne.</p>
+    <a href="menu.html" class="cta-btn glow-btn">Voir la carte</a>
+  </div>
+</section>
+
+<!-- NOTRE HISTOIRE -->
+<section class="section histoire-section" data-animate="fade-up">
+  <div class="histoire-image">
+    <div class="histoire-overlay"></div>
+    <div class="histoire-content">
+      <h2>Notre Histoire</h2>
+      <p>
+        La Salentina, c’est avant tout une histoire de famille et de partage.
+        Nous avons créé ce lieu pour offrir des moments chaleureux, où chaque client se sent comme à la maison.
+        Notre objectif ? Faire de votre repas une expérience conviviale, où le plaisir d’être ensemble est au cœur de tout.
+        Bienvenue chez nous, bienvenue dans notre famille.
+              </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- HORAIRES -->
+<section class="section horaires-section" data-animate="fade-up">
+  <h2>🕒 Nos Horaires</h2>
+  <div class="horaires-table">
+    <div class="horaires-header">
+      <span>Jour</span>
+      <span>Midi</span>
+      <span>Soir</span>
+    </div>
+    <div class="horaires-row">
+      <span>Lundi - Mercredi</span>
+      <span>12h - 14h</span>
+      <span>-</span>
+    </div>
+    <div class="horaires-row">
+      <span>Jeudi - Vendredi</span>
+      <span>12h - 14h</span>
+      <span>19h30 - 21h30</span>
+    </div>
+    <div class="horaires-row">
+      <span>Samedi</span>
+      <span>-</span>
+      <span>19h30 - 21h30</span>
+    </div>
+    <div class="horaires-row closed">
+      <span>Dimanche</span>
+      <span colspan="2">Fermé</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- AVIS -->
+<section class="section avis-section" data-animate="fade-up">
+  <h3>Avis Clients</h3>
+  <p class="avis">⭐⭐⭐⭐⭐ « Excellente pizza et accueil chaleureux ! »</p>
+  <a href="https://www.google.com/search?q=La+Salentina+Avis" target="_blank" class="avis-link">Voir les avis Google</a>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact" data-animate="fade-up">
+  <h2>📍 Contact et Adresse</h2>
+  <p>11,13 route de Taillefer, 33450 Montussan</p>
+  <p>📞 <a href="tel:+33556723467">05.56.72.34.67</a></p>
+</section>
+
+<footer>
+  © 2025 La Salentina - Tous droits réservés
+</footer>
+
+<script src="app.js"></script>
+
+<!-- BANNIÈRE DE STATUT -->
+<div id="status-banner" class="status-banner"></div>
+
+<div id="secret-zone" style="position:fixed; bottom:0; left:0; width:50px; height:50px; z-index:999;"></div>
+
+<!-- FORMULAIRE CACHÉ -->
+<div id="edit-panel" class="edit-panel">
+  <textarea id="status-text" placeholder="Écrire un message (ex: Restaurant fermé aujourd'hui)"></textarea>
+  <div class="status-options">
+    <label><input type="radio" name="status-color" value="closed" checked> Fermé</label>
+    <label><input type="radio" name="status-color" value="open"> Ouvert</label>
+  </div>
+  <button id="save-status">Enregistrer</button>
+  <button id="clear-status">Effacer</button>
+</div>
+
+<!-- POPUP MOT DE PASSE -->
+<div id="password-popup" class="password-popup">
+  <div class="password-box">
+    <h3>Accès propriétaire</h3>
+    <input type="password" id="admin-password" placeholder="Mot de passe">
+    <button id="check-password">Entrer</button>
+    <p id="error-message" style="color:red; display:none;">Mot de passe incorrect</p>
+  </div>
+</div>
+
+
+
+
+</body>
+</html>
