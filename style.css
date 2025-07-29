@@ -407,7 +407,7 @@ a { text-decoration: none; }
 /* HERO */
 .hero {
   height: 90vh;
-  background: url('img1.PNG') center/cover no-repeat;
+  background: url('img1.png') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
