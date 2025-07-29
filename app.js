@@ -1,4 +1,6 @@
+// =========================
 // Animation au scroll
+// =========================
 const sections = document.querySelectorAll("[data-animate]");
 window.addEventListener("scroll", () => {
   sections.forEach(sec => {
@@ -9,24 +11,36 @@ window.addEventListener("scroll", () => {
   });
 });
 
+// =========================
 // Header scroll effect
+// =========================
 const header = document.querySelector(".header");
 window.addEventListener("scroll", () => {
   header.classList.toggle("scrolled", window.scrollY > 50);
 });
 
-// Menu burger
+// =========================
+// Menu burger responsive
+// =========================
 const burger = document.getElementById("burger");
 const nav = document.querySelector(".nav");
+
 burger.addEventListener("click", () => {
   nav.classList.toggle("active");
-});
-// Fermer menu après clic sur un lien (UX mobile)
-document.querySelectorAll(".nav a").forEach(link => {
-  link.addEventListener("click", () => nav.classList.remove("active"));
+  document.body.classList.toggle("menu-open"); // Overlay
 });
 
-// Parallax Hero (désactivé sur mobile pour éviter bugs)
+// Fermer menu après clic sur un lien
+document.querySelectorAll(".nav a").forEach(link => {
+  link.addEventListener("click", () => {
+    nav.classList.remove("active");
+    document.body.classList.remove("menu-open");
+  });
+});
+
+// =========================
+// Parallax Hero (désactivé sur mobile)
+// =========================
 const hero = document.querySelector(".hero");
 if (window.innerWidth > 768) {
   window.addEventListener("scroll", () => {
@@ -35,6 +49,9 @@ if (window.innerWidth > 768) {
   });
 }
 
+// =========================
+// Système bannière + mot de passe
+// =========================
 document.addEventListener("DOMContentLoaded", () => {
   const secretZone = document.getElementById("secret-zone");
   const editPanel = document.getElementById("edit-panel");
