@@ -21,14 +21,19 @@ const nav = document.querySelector(".nav");
 burger.addEventListener("click", () => {
   nav.classList.toggle("active");
 });
-
-// Parallax Hero
-const hero = document.querySelector(".hero");
-window.addEventListener("scroll", () => {
-  let offset = window.scrollY * 0.4;
-  hero.style.backgroundPositionY = `${offset}px`;
+// Fermer menu après clic sur un lien (UX mobile)
+document.querySelectorAll(".nav a").forEach(link => {
+  link.addEventListener("click", () => nav.classList.remove("active"));
 });
 
+// Parallax Hero (désactivé sur mobile pour éviter bugs)
+const hero = document.querySelector(".hero");
+if (window.innerWidth > 768) {
+  window.addEventListener("scroll", () => {
+    let offset = window.scrollY * 0.4;
+    hero.style.backgroundPositionY = `${offset}px`;
+  });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const secretZone = document.getElementById("secret-zone");
@@ -42,15 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminPassword = document.getElementById("admin-password");
   const errorMessage = document.getElementById("error-message");
 
-  const CORRECT_PASSWORD = "pizza2025"; // Change le mot de passe ici
+  const CORRECT_PASSWORD = "pizza2025"; // 🔒 Change ici ton mot de passe
 
   // Charger message sauvegardé
   const savedStatus = localStorage.getItem("restaurantStatus");
   const savedColor = localStorage.getItem("restaurantStatusColor");
   if (savedStatus) {
     statusBanner.textContent = savedStatus;
-    statusBanner.classList.add(savedColor || "closed");
+    statusBanner.className = "status-banner " + (savedColor || "closed");
     statusBanner.style.display = "block";
+    document.body.classList.add("has-banner");
   }
 
   // Détecter 3 clics rapides dans la zone secrète
@@ -86,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       statusBanner.className = "status-banner " + color;
       statusBanner.style.display = "block";
       editPanel.style.display = "none";
+      document.body.classList.add("has-banner");
     }
   });
 
@@ -95,11 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("restaurantStatusColor");
     statusBanner.style.display = "none";
     editPanel.style.display = "none";
-  });
-  if (message) {
-    document.body.classList.add("has-banner");
-  } else {
     document.body.classList.remove("has-banner");
-  }
-
+  });
 });
