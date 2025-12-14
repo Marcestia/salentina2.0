@@ -26,15 +26,17 @@ const burger = document.getElementById("burger");
 const nav = document.querySelector(".nav");
 
 burger.addEventListener("click", () => {
-  nav.classList.toggle("active");
-  document.body.classList.toggle("menu-open"); // Overlay
+  const isOpen = nav.classList.toggle("active");
+  document.body.classList.toggle("menu-open", isOpen);
+  burger.setAttribute("aria-expanded", String(isOpen));
 });
 
 // Fermer menu après clic sur un lien
-document.querySelectorAll(".nav a").forEach(link => {
+(document.querySelectorAll(".nav a") || []).forEach(link => {
   link.addEventListener("click", () => {
     nav.classList.remove("active");
     document.body.classList.remove("menu-open");
+    burger.setAttribute("aria-expanded", "false");
   });
 });
 
@@ -42,7 +44,7 @@ document.querySelectorAll(".nav a").forEach(link => {
 // Parallax Hero (désactivé sur mobile)
 // =========================
 const hero = document.querySelector(".hero");
-if (window.innerWidth > 768) {
+if (hero && window.innerWidth > 768) {
   window.addEventListener("scroll", () => {
     let offset = window.scrollY * 0.4;
     hero.style.backgroundPositionY = `${offset}px`;
