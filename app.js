@@ -64,17 +64,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminPassword = document.getElementById("admin-password");
   const errorMessage = document.getElementById("error-message");
 
-  const CORRECT_PASSWORD = "pizza2025"; // 🔒 Change ici ton mot de passe
+  const CORRECT_PASSWORD = "pizza 2025";
+  const STATUS_API_URL = "status.php";
 
-  // Charger message sauvegardé
-  const savedStatus = localStorage.getItem("restaurantStatus");
-  const savedColor = localStorage.getItem("restaurantStatusColor");
-  if (savedStatus) {
-    statusBanner.textContent = savedStatus;
-    statusBanner.className = "status-banner " + (savedColor || "closed");
-    statusBanner.style.display = "block";
-    document.body.classList.add("has-banner");
-  }
+  const applyStatusToBanner = (status) => {
+    if (status && status.message) {
+      statusBanner.textContent = status.message;
+      statusBanner.className = "status-banner " + (status.color || "closed");
+      statusBanner.style.display = "block";
+      document.body.classList.add("has-banner");
+      return;
+    }
+
+    statusBanner.style.display = "none";
+    document.body.classList.remove("has-banner");
+  };
+
+  const loadStatusFromServer = async () => {
+    try {
+      const response = await fetch(STATUS_API_URL, { cache: "no-store" });
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        return;
+      }
+
+      applyStatusToBanner(data.status);
+    } catch (error) {
+      console.error("Impossible de charger le statut partagé :", error);
+    }
+  };
+
+  loadStatusFromServer();
+  setInterval(loadStatusFromServer, 30000);
 
   // Détecter 3 clics rapides dans la zone secrète
   let clickCount = 0;
@@ -99,26 +121,67 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Enregistrer message
-  saveBtn.addEventListener("click", () => {
+  saveBtn.addEventListener("click", async () => {
     const message = statusText.value.trim();
     const color = document.querySelector('input[name="status-color"]:checked').value;
+
     if (message) {
-      localStorage.setItem("restaurantStatus", message);
-      localStorage.setItem("restaurantStatusColor", color);
-      statusBanner.textContent = message;
-      statusBanner.className = "status-banner " + color;
-      statusBanner.style.display = "block";
-      editPanel.style.display = "none";
-      document.body.classList.add("has-banner");
+      try {
+        const response = await fetch(STATUS_API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            action: "save",
+            password: adminPassword.value,
+            message,
+            color
+          })
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+          errorMessage.textContent = data.error || "Erreur lors de l'enregistrement.";
+          errorMessage.style.display = "block";
+          return;
+        }
+
+        applyStatusToBanner(data.status);
+        editPanel.style.display = "none";
+      } catch (error) {
+        errorMessage.textContent = "Serveur inaccessible. Vérifiez status.php.";
+        errorMessage.style.display = "block";
+      }
     }
   });
 
   // Effacer message
-  clearBtn.addEventListener("click", () => {
-    localStorage.removeItem("restaurantStatus");
-    localStorage.removeItem("restaurantStatusColor");
-    statusBanner.style.display = "none";
-    editPanel.style.display = "none";
-    document.body.classList.remove("has-banner");
+  clearBtn.addEventListener("click", async () => {
+    try {
+      const response = await fetch(STATUS_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          action: "clear",
+          password: adminPassword.value
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        errorMessage.textContent = data.error || "Erreur lors de la suppression.";
+        errorMessage.style.display = "block";
+        return;
+      }
+
+      applyStatusToBanner(data.status);
+      editPanel.style.display = "none";
+    } catch (error) {
+      errorMessage.textContent = "Serveur inaccessible. Vérifiez status.php.";
+      errorMessage.style.display = "block";
+    }
   });
 });
