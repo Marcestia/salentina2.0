@@ -63,7 +63,22 @@
       font-style: italic;
       margin-top: 1rem;
     }
-  </style>
+  
+    .status-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 14px 10px;
+      font-weight: bold;
+      z-index: 3000;
+      color: #fff;
+    }
+    .status-banner.closed { background: #b71c1c; }
+    .status-banner.open { background: #1b5e20; }
+    body.has-banner { padding-top: 72px; }
+</style>
 </head>
 <body>
   <a href="index.html" style="position: absolute; top: 1rem; left: 1rem; text-decoration: none; font-size: 2rem; color: #b22222;">←</a>
@@ -138,5 +153,26 @@
     <div class="menu-item"><span>Carafe 1L</span><span>12.00 €</span></div>
     <div class="menu-item"><span>Bouteilles exposées à l'entrée</span><span>--</span></div>
   </div>
+
+<div id="status-banner" class="status-banner" style="display:none;"></div>
+<script>
+  (async function loadSharedStatus() {
+    const banner = document.getElementById("status-banner");
+    if (!banner) return;
+
+    try {
+      const response = await fetch("status.php", { cache: "no-store" });
+      const data = await response.json();
+      if (!response.ok || !data.ok || !data.status || !data.status.message) return;
+
+      banner.textContent = data.status.message;
+      banner.className = "status-banner " + (data.status.color === "open" ? "open" : "closed");
+      banner.style.display = "block";
+      document.body.classList.add("has-banner");
+    } catch (error) {
+      console.error("Bannière partagée indisponible", error);
+    }
+  })();
+</script>
 </body>
 </html>
