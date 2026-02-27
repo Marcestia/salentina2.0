@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="has-banner">
 
 <header class="header">
   <div class="logo-container">
@@ -122,37 +122,7 @@
   © 2025 La Salentina - Tous droits réservés
 </footer>
 
-<script src="status-config.js"></script>
-<script src="app.js"></script>
-
-<!-- BANNIÈRE DE STATUT -->
-<div id="status-banner" class="status-banner"></div>
-
-<div id="secret-zone" style="position:fixed; bottom:0; left:0; width:50px; height:50px; z-index:999;"></div>
-
-<!-- FORMULAIRE CACHÉ -->
-<div id="edit-panel" class="edit-panel">
-  <textarea id="status-text" placeholder="Écrire un message (ex: Restaurant fermé aujourd'hui)"></textarea>
-  <div class="status-options">
-    <label><input type="radio" name="status-color" value="closed" checked> Fermé</label>
-    <label><input type="radio" name="status-color" value="open"> Ouvert</label>
-  </div>
-  <button id="save-status">Enregistrer</button>
-  <button id="clear-status">Effacer</button>
-</div>
-
-<!-- POPUP MOT DE PASSE -->
-<div id="password-popup" class="password-popup">
-  <div class="password-box">
-    <h3>Accès propriétaire</h3>
-    <input type="password" id="admin-password" placeholder="Mot de passe">
-    <button id="check-password">Entrer</button>
-    <p id="error-message" style="color:red; display:none;">Mot de passe incorrect</p>
-  </div>
-</div>
-
-
-
+<div id="status-banner" class="status-banner closed" style="display:block;">Commande uniquement à emporter le soir du 27/02 au 07/03 inclus !</div>
 
 </body>
 </html>

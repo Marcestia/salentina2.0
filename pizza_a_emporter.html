@@ -76,7 +76,7 @@
     body.has-banner { padding-top: 72px; }
 </style>
 </head>
-<body>
+<body class="has-banner">
 <a href="index.html" style="position: absolute; top: 1rem; left: 1rem; text-decoration: none; font-size: 2rem; color: #b22222;">←</a>
 
 
@@ -87,46 +87,6 @@
 <div class="note">Supplément de 2 € pour tout ingrédient rajouté ou modifié</div>
 <footer>Commande par téléphone :📞 <a href="tel:+33556723467">05.56.72.34.67</a></footer>
 
-<div id="status-banner" class="status-banner" style="display:none;"></div>
-<script src="status-config.js"></script>
-<script>
-  (async function loadSharedStatus() {
-    const banner = document.getElementById("status-banner");
-    if (!banner) return;
-
-    const config = window.SALENTINA_STATUS_CONFIG || {};
-    const supabaseUrl = config.supabaseUrl || "";
-    const supabaseAnonKey = config.supabaseAnonKey || "";
-    const statusRowId = Number(config.statusRowId || 1);
-
-    if (!supabaseUrl || !supabaseAnonKey) return;
-
-    try {
-      const response = await fetch(
-        `${supabaseUrl}/rest/v1/site_status?id=eq.${statusRowId}&select=message,color`,
-        {
-          method: "GET",
-          headers: {
-            apikey: supabaseAnonKey,
-            Authorization: `Bearer ${supabaseAnonKey}`
-          },
-          cache: "no-store"
-        }
-      );
-      if (!response.ok) return;
-
-      const rows = await response.json();
-      const status = Array.isArray(rows) ? rows[0] : null;
-      if (!status || !status.message) return;
-
-      banner.textContent = status.message;
-      banner.className = "status-banner " + (status.color === "open" ? "open" : "closed");
-      banner.style.display = "block";
-      document.body.classList.add("has-banner");
-    } catch (error) {
-      console.error("Bannière partagée indisponible", error);
-    }
-  })();
-</script>
+<div id="status-banner" class="status-banner closed" style="display:block;">Commande uniquement à emporter le soir du 27/02 au 07/03 inclus !</div>
 </body>
 </html>
